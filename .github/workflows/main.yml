@@ -438,24 +438,7 @@ jobs:
 
         crave ${{ secrets.CRAVE_FLAGS }} run --no-patch --${CLEAN} "rm -rf .repo/local_manifests/ ${{ github.event.inputs.REMOVALS }} && \
         # Clone local_manifests repository
-        $BUILD_DIFFERENT_ROM ; \
-        $LOCAL_MANIFEST && \
-
-        # Sync the repositories
-        /opt/crave/resync.sh  && \
-
-        # Set up build environment
-        export BUILD_USERNAME=${{ github.actor }} ; \
-        export BUILD_HOSTNAME=crave ; \
-        source build/envsetup.sh && \
-
-        echo "Repository: ${{ github.repository }}"; \
-        echo "Run ID: ${{ github.run_id }}"; \
-
-        # Build the ROM
-        $LUNCH && \
-        make installclean && \
-        ${{ github.event.inputs.BUILD_COMMAND }}"
+        crave run --no-patch -- "curl https://raw.githubusercontent.com/Jayzee-Zee/build_scripts/refs/heads/Blaze/build.sh | bash"
 
       # Send Build 'status' notification (Success)
     - name: Telegram Notification
